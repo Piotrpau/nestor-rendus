@@ -215,7 +215,7 @@ async function ghSave(){
     const payload = JSON.stringify(DATA, (k,v) => k.startsWith('_') ? undefined : v);
     const res = await fetch('https://api.github.com/repos/' + GH.owner + '/' + GH.repo + '/contents/' + GH.path, {
       method:'PUT',
-      headers:{ 'Authorization':'token ' + GHTOKEN, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
+      headers:{ 'Authorization':***' + GHTOKEN, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
       body: JSON.stringify({ message:'Modifs WF Pro ' + new Date().toLocaleString('fr-FR'), content: btoa(unescape(encodeURIComponent(payload))), sha: sha })
     });
     if (res.ok) {
