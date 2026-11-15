@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pro — WorkFlowy miroir</title>
+<style>
+:root { --bg:#1e1f24; --fg:#e8e8ea; --muted:#9a9aa5; --accent:#f60; --line:#3a3b42; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif; }
+header { display:flex; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:5; }
+header h1 { font-size:17px; margin:0; color:var(--accent); }
+header .meta { color:var(--muted); font-size:12px; }
+header .spacer { flex:1; }
+button { background:#2b2d34; color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:5px 10px; cursor:pointer; font-size:13px; }
+button:hover { background:#383a42; }
+#tree { padding:8px 0 60vh 8px; }
+.bullet { cursor:pointer; user-select:none; color:var(--muted); display:inline-block; width:14px; text-align:center; flex:none; }
+.bullet:hover { color:var(--accent); }
+.row { display:flex; align-items:flex-start; padding:1px 0; border-radius:4px; }
+.row:hover { background:#26272d; }
+.row .content { flex:1; min-width:0; outline:none; padding:0 4px; white-space:pre-wrap; }
+.row .content:focus { background:#2f3038; border-radius:3px; }
+.row.done .content { text-decoration:line-through; color:var(--muted); }
+.children { margin-left:20px; border-left:1px solid var(--line); }
+.childrenHidden { display:none; }
+.zoom-banner { background:#2b2d34; padding:4px 16px; font-size:13px; color:var(--muted); display:none; }
+kbd { background:#383a42; border-radius:3px; padding:0 5px; font-size:11px; }
+.help { color:var(--muted); font-size:12px; padding:0 16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>💻 Pro</h1>
+  <span class="meta">miroir WorkFlowy · maj <span id="maj"></span></span>
+  <span class="spacer"></span>
+  <span class="help"><kbd>Tab</kbd>/<kbd>Maj+Tab</kbd> indenter · <kbd>Entrée</kbd> nouveau point · <kbd>Ctrl+S</kbd> export</span>
+  <button id="expandAll">Tout déplier</button>
+  <button id="collapseAll">Tout replier</button>
+  <button id="save">💾 Exporter OPML</button>
+</header>
+<div class="zoom-banner" id="zoomBanner"></div>
+<div id="tree"></div>
+
+<script id="data" type="application/json">{"updated":"2026-11-15T20:23:01.870Z","root":{"name":"💻\u003cb>Pro \u003c/b>","complete":false,"children":[{"name":"Demandes","complete":false,"children":[{"name":"\u003cmark class=\"colored bc-red\">Frise prospective de l'adaptation du réseau.\u003c/mark>","complete":false,"children":[]},{"name":"PDF Signés ","complete":false,"children":[{"name":"Commande faite","complete":false,"children":[]}]},{"name":"Parapheur démat","complete":false,"children":[{"name":"Une fois licences pdf ok","complete":false,"children":[]}]},{"name":"Prix Premium LinkedIn","complete":false,"children":[{"name":"Envoyé, essai 1 mois ?","complete":false,"children":[]}]},{"name":"MAJ Page DDFIP Pref","complete":false,"children":[]},{"name":"Archive","complete":false,"children":[{"name":"Réseau d'alerte Montde 8/9","complete":false,"children":[{"name":"Vu par Steeve","complete":false,"children":[]}]},{"name":"Deleg signature Marque","complete":false,"children":[{"name":"fait","complete":false,"children":[]}]},{"name":"Acceuil LinkedIn","complete":false,"children":[{"name":"ok pour envoi","complete":false,"children":[]}]},{"name":"Deleg Signature tu","complete":false,"children":[{"name":"publication ?","complete":false,"children":[]}]},{"name":"Déleg SGC MDM","complete":false,"children":[{"name":"validé","complete":false,"children":[]}]}]}]},{"name":"CODIR","complete":false,"children":[{"name":"Mentorat à lancer","complete":false,"children":[]}]},{"name":"Posts Ullo","complete":false,"children":[{"name":"Une photo par mois","complete":false,"children":[{"name":"Curiosité touristique, évènement, étonnement","complete":false,"children":[]}]},{"name":"Publicité Likes","complete":false,"children":[{"name":"https://dfp560.monulysse.dgfip/jcms/27913933_JNewsArticle/le-saviez-vous-liker-les-articles","complete":false,"children":[]}]},{"name":"Christelle DOUET","complete":false,"children":[{"name":"Correspondante handicap","complete":false,"children":[]}]},{"name":"Suite de la seconde vie Matos","complete":false,"children":[{"name":"Photos Isabelle","complete":false,"children":[]}]},{"name":"Concours Photo 2026","complete":false,"children":[]},{"name":"Indemnité carbu","complete":false,"children":[{"name":"Ullo pour agents+mail \u003ctime startYear=\"2026\" startMonth=\"10\" startDay=\"22\">Thu, Oct 22, 2026\u003c/time> ","complete":false,"children":[]}]},{"name":"Concours Logo DDFiP40","complete":false,"children":[]}]},{"name":"Modifs Ullo","complete":false,"children":[{"name":"Restauration","complete":false,"children":[]},{"name":"Référents bien identifiés","complete":false,"children":[{"name":"attractivité ? Et cie","complete":false,"children":[]}]},{"name":"Annuaire à jour","complete":false,"children":[{"name":"idées :Annuaires | DDFiP de l'Essonne","complete":false,"children":[]},{"name":"Articulation Thomas Hourat ? TOIP et cie=> revoir article MAJ annuaire","complete":false,"children":[]}]},{"name":"Espace Ulysse CABCOM","complete":false,"children":[{"name":"Enlever En SMA","complete":false,"children":[]}]},{"name":"Espaces A, A et A+ intérêt?","complete":false,"children":[]},{"name":"Deleg signature, enlever de strat","complete":false,"children":[]}]},{"name":"Presse","complete":false,"children":[{"name":"Fermeture des sites pour le 23/11, et arrêté","complete":false,"children":[]},{"name":"Sécheresse et autres","complete":false,"children":[{"name":"De Carl, voir Mathilde","complete":false,"children":[]}]}]},{"name":"RTN","complete":false,"children":[{"name":"Message docs séminaire","complete":false,"children":[]},{"name":"Préparer ateliers IA","complete":false,"children":[]}]},{"name":"ECOFIP","complete":false,"children":[{"name":"CLEAN UP","complete":false,"children":[{"name":"Pas à pas encombrement et tris","complete":false,"children":[]}]},{"name":"Frise des évenements","complete":false,"children":[{"name":"utilisation des outils de collaboration, bonnes pratiques numériques qui sont des ateliers mis en place si je ne me trompe pas avec la délégation.","complete":false,"children":[]},{"name":"Mais aussi le dons de matériel aux agents qui participe finalement au recyclage intelligent.","complete":false,"children":[]}]}]},{"name":"Com Ext","complete":false,"children":[{"name":"Contacter asso 2e vie, pour com ext => photos Isabelle","complete":false,"children":[]}]},{"name":"Service","complete":false,"children":[{"name":"\u003cmark class=\"colored bc-red\">Note départementale\u003c/mark>","complete":false,"children":[]},{"name":"Visite CDS + trombi","complete":false,"children":[]},{"name":"Inviter Pref","complete":false,"children":[{"name":"Proposer visite aux collègue, cellule crise","complete":false,"children":[]}]},{"name":"Réfléchir solution de sonorisation","complete":false,"children":[]},{"name":"Chiffrer pupitre pour la direction","complete":false,"children":[{"name":"Mail 22/9","complete":false,"children":[]}]},{"name":"Tableau de bord partagé - Tâches","complete":false,"children":[]},{"name":"Suivi des réponses attendues CK","complete":false,"children":[{"name":"Lié tâches ? Pour l'heure reepertoir dans Direction","complete":false,"children":[]}]},{"name":"Voir courrier","complete":false,"children":[{"name":"pour dispatch","complete":false,"children":[]}]},{"name":"Courrier Pref Sous Pref et cie","complete":false,"children":[{"name":"pour balf secretariat seulement","complete":false,"children":[]}]},{"name":"Normaliser envois et réception BALF","complete":false,"children":[]},{"name":"Caler date com pref","complete":false,"children":[{"name":"Chez nous janvier 27","complete":false,"children":[]}]},{"name":"Mail de relance annuaire avec format demandé => nouveau process, valider TOIP","complete":false,"children":[]},{"name":"Parapheur démat","complete":false,"children":[]},{"name":"Déleg PRS sur ullo et katia","complete":false,"children":[]},{"name":"Dans mail aux référents et cie, indiquer \"si participation en informer le CDS\"","complete":false,"children":[]},{"name":"Tiers lieux à caler","complete":false,"children":[]},{"name":"Archive","complete":false,"children":[{"name":"L'assistant IA","complete":false,"children":[]},{"name":"Pointage Léa","complete":false,"children":[{"name":"En fait non, évitons les récup","complete":false,"children":[]}]},{"name":"Téléphone Léa","complete":false,"children":[{"name":"Portable OK, Fixe à suivre","complete":false,"children":[]}]}]}]},{"name":"Projets","complete":false,"children":[{"name":"Logo ddfip","complete":false,"children":[]},{"name":"Facturation Electronique","complete":false,"children":[{"name":"CCI 28/09","complete":false,"children":[]}]},{"name":"Conv C B","complete":false,"children":[{"name":"📅 23 nov.","complete":false,"children":[]}]},{"name":"Trombinoscope","complete":false,"children":[{"name":"Cadre OK, voir à inviter les gens","complete":false,"children":[]}]},{"name":"Groupe miroir ","complete":false,"children":[{"name":"\u003ctime startYear=\"2026\" startMonth=\"11\" startDay=\"2\">Mon, Nov 2, 2026\u003c/time> ","complete":false,"children":[]}]},{"name":"Groupe miroir A+","complete":false,"children":[{"name":"\u003ctime startYear=\"2026\" startMonth=\"11\" startDay=\"16\">Mon, Nov 16, 2026\u003c/time> ","complete":false,"children":[]}]},{"name":"promotion concours d’inspecteur (puis B","complete":false,"children":[{"name":"publier communications","complete":false,"children":[]}]},{"name":"Journée cohésion CODIR fin d'année","complete":false,"children":[{"name":"trouver plan bis","complete":false,"children":[]},{"name":"pour Delphine","complete":false,"children":[]}]},{"name":"CleanUp day","complete":false,"children":[{"name":"Charte des bonnes pratiques messagerie pro","complete":false,"children":[]},{"name":"ddur, connaissance des rep partagé par service, pas à pas d'archivage, nettoyage","complete":false,"children":[]}]},{"name":"SO ô féminin","complete":false,"children":[{"name":"parentalité","complete":false,"children":[]},{"name":"intervenant extérieur ?","complete":false,"children":[]},{"name":"Céline Dumerc","complete":false,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"12\" startDay=\"1\">Tue, Dec 1, 2026\u003c/time> ","complete":false,"children":[]}]}]},{"name":"Echéances récurrentes","complete":false,"children":[{"name":"Janvier","complete":false,"children":[{"name":"Voeux du directeur","complete":false,"children":[]},{"name":"Clean Up Day","complete":false,"children":[]}]},{"name":"Septembre","complete":false,"children":[{"name":"Annuaire","complete":false,"children":[{"name":"Mouvements","complete":false,"children":[]},{"name":"Titularisations","complete":false,"children":[]}]}]},{"name":"Octobre","complete":false,"children":[{"name":"Octobre Rose","complete":false,"children":[]}]},{"name":"Novembre","complete":false,"children":[{"name":"Movember","complete":false,"children":[]},{"name":"Duo Day","complete":false,"children":[]}]},{"name":"Décembre","complete":false,"children":[{"name":"PCA","complete":false,"children":[]}]},{"name":"Conventions","complete":false,"children":[{"name":"A A+","complete":false,"children":[]},{"name":"B C","complete":false,"children":[{"name":"Arrétés de fermeture","complete":false,"children":[]}]}]},{"name":"Groupes Miroirs","complete":false,"children":[{"name":"A+","complete":false,"children":[]},{"name":"A","complete":false,"children":[]},{"name":"B C","complete":false,"children":[]}]}]},{"name":"Moi","complete":false,"children":[{"name":"Forpro Safire et Néolab (grist)","complete":false,"children":[{"name":"COM 0104-011","complete":false,"children":[]}]},{"name":"FD Convention","complete":false,"children":[{"name":"mail le 22/9","complete":false,"children":[]}]},{"name":"Référents ? Numérique Transfo métiers juridiques","complete":false,"children":[{"name":"référent moi, champions 5 mentionnés","complete":false,"children":[]}]},{"name":"Chèque sport et cie","complete":false,"children":[]},{"name":"Concursive bras","complete":false,"children":[{"name":"redemande le 22/9","complete":false,"children":[]}]},{"name":"Pointage WEB Sirhius","complete":false,"children":[{"name":"Utilisateur inconnu","complete":false,"children":[]}]}]},{"name":"📝Mémo","complete":false,"children":[{"name":"CSAL / FS","complete":false,"children":[{"name":"ODJ et docs préparatoires","complete":false,"children":[]},{"name":"Convocs aux titulaires","complete":false,"children":[]},{"name":"Convocs aux experts sur demande","complete":false,"children":[]},{"name":"Envoi aux CDS et adjoints","complete":false,"children":[]}]},{"name":"Article U40","complete":false,"children":[{"name":"Chapeau: photo et phrases d'accroche","complete":false,"children":[]},{"name":"Corps avec photos principales en dessous","complete":false,"children":[]},{"name":"Visionneuse lorsque bcp à intégrer \"à l'envers\" car derniere mise première affichée","complete":false,"children":[]},{"name":"Classer sur les domaines concernés","complete":false,"children":[]},{"name":"En \"avancé\" ne pas afficher corps, mais lire la suite, image large","complete":false,"children":[]}]},{"name":"Sud-Ouest","complete":false,"children":[{"name":"Journal / Landes / Lire / Imprimer / Enregistrer en PDF et copier le titre pour renommer le fichier et coller pour sommaire mail","complete":false,"children":[]}]},{"name":"Escale \u003ca href=\"https://escalev3.dgfip.finances.gouv.fr/zephyr/UploadToken.jsp?token=AZJeuM2fLp2iXiO9bRatzjuxe5KaX4OS4IfS4CvgeQbvmFRG\">https://escalev3.dgfip.finances.gouv.fr/zephyr/UploadToken.jsp?token=AZJeuM2fLp2iXiO9bRatzjuxe5KaX4OS4IfS4CvgeQbvmFRG\u003c/a>","complete":false,"children":[]},{"name":"Évènement","complete":false,"children":[{"name":"Lancement","complete":false,"children":[{"name":"Public","complete":false,"children":[]},{"name":"Date","complete":false,"children":[]},{"name":"Lieux (résa éventuelle)","complete":false,"children":[]},{"name":"Transport","complete":false,"children":[]},{"name":"Nourriture et boisson","complete":false,"children":[]},{"name":"Matériel","complete":false,"children":[{"name":"Chaises","complete":false,"children":[]},{"name":"Tables","complete":false,"children":[]},{"name":"Projection","complete":false,"children":[]},{"name":"Pupitre","complete":false,"children":[]},{"name":"Estrade","complete":false,"children":[]},{"name":"Sono, plusieurs micros","complete":false,"children":[]}]},{"name":"Intervenants","complete":false,"children":[]},{"name":"Ordre du jour","complete":false,"children":[]},{"name":"Émargement","complete":false,"children":[{"name":"Droit à l'image en refus général par envoi d'un mail au cabcom","complete":false,"children":[]}]}]},{"name":"Jour J","complete":false,"children":[{"name":"Souris clavier pour diapo","complete":false,"children":[]},{"name":"Photos de chaque intervenant en tribune, avec même cadre et proche","complete":false,"children":[]},{"name":"Photo d'assemblée devant, derrière, côtés","complete":false,"children":[]},{"name":"Prise de notes légères pour résumer succinctement le propos de chaque intervention hors diapo","complete":false,"children":[]}]}]},{"name":"Dulamon 2402#","complete":false,"children":[]},{"name":"Dagas 8576A - 8576# - 3926","complete":false,"children":[]},{"name":"Dax entrée personnel 2024","complete":false,"children":[]},{"name":"Téléphone : renvoi d'appel du portable : 21 +n° tel+ #, pour annuler #21# ","complete":false,"children":[]},{"name":"Publication délégations de signatures","complete":false,"children":[{"name":"Déposer le pdf sur Médiathèque, supprimer le précédent","complete":false,"children":[]},{"name":"Copier le lien via partage","complete":false,"children":[]},{"name":"Modifier le lien et nom sur l'article Suivi délégations de signatures","complete":false,"children":[]}]},{"name":"Idées CabCom","complete":false,"children":[{"name":"Objectiver nombre de posts Ullo40 par semaine","complete":false,"children":[]},{"name":"Prévoir des posts \"bouche-trous\" en cas de pénurie de sujets","complete":false,"children":[]}]},{"name":"Déplacements","complete":false,"children":[{"name":"Création OM ponctuel via objet principal, autre puis vierge et OM permanent de référence","complete":false,"children":[]}]}]},{"name":"📦Archives🟩","complete":false,"children":[{"name":"Questionnaire Accueil","complete":false,"children":[{"name":"Rapport : https://analytics.dragnsurvey.com/report/view/4c89012c","complete":false,"children":[]},{"name":"demande à léa pour propre 25/9","complete":false,"children":[]}]},{"name":"👨‍💼Postes IDIV +1000 € ! (4300 € moyenne 64, puis 5550 € en HC)","complete":false,"children":[{"name":"Un poste TOP dans le Béarn ! 😁","complete":false,"children":[]},{"name":"\u003cb>Candidature immédiate: NON je vais passer IP à ce concours !\u003c/b>","complete":true,"children":[{"name":"DAJ/CF Tarbes max \u003ctime startYear=\"2025\" startMonth=\"8\" startDay=\"29\">Fri, Aug 29, 2025\u003c/time> ","complete":true,"children":[{"name":"avis","complete":true,"children":[]},{"name":"LM","complete":false,"children":[]}]},{"name":"Adjoint SGC Tarbes max \u003ctime startYear=\"2025\" startMonth=\"8\" startDay=\"29\">Fri, Aug 29, 2025\u003c/time> ","complete":true,"children":[]}]},{"name":"\u003ctime startYear=\"2025\" startMonth=\"12\" startDay=\"5\">Fri, Dec 5, 2025\u003c/time> si pas admissible IP mais... JAMAIS DE LA VIE ! 💪 => En route pour la sélection ! 😁","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"20\">Fri, Feb 20, 2026\u003c/time> si pas admis IP, \u003cb>TA TA TA ! \u003c/b>","complete":true,"children":[]}]},{"name":"Installation Mont-de-Marsan","complete":false,"children":[{"name":"Liaison RH 40","complete":true,"children":[{"name":"Parking boulot ? oui","complete":false,"children":[]},{"name":"Possibilité laisser la voiture ? oui","complete":false,"children":[]},{"name":"Calcul rémunération réelle","complete":false,"children":[]}]},{"name":"Trajets","complete":false,"children":[{"name":"Réduction péage Montde voir \u003ca href=\"http://fulli.com\">fulli.com\u003c/a>","complete":false,"children":[{"name":"CITO 30 A'LIENOR","complete":false,"children":[]},{"name":"Grâce à l'offre CITO 30, \u003cb>bénéficiez d'une réduction de 30% si vous effectuez au moins 20 fois ou dix allers-retours sur le trajet que vous venez de choisir. \u003c/b>La réduction de 30% se déclenche dès le 20ème trajet réalisé sur le parcours choisi et s’applique à tous les trajets effectués dans le mois, du premier au dernier.","complete":false,"children":[]},{"name":"Votre entrée choisie est LIMITE A64","complete":false,"children":[]},{"name":"Votre sortie choisie est AIRE SUR L'ADOUR N","complete":false,"children":[]},{"name":"Frais de gestion mensuels France","complete":false,"children":[]},{"name":"Prix TTC","complete":false,"children":[]},{"name":"2,50 €","complete":false,"children":[]},{"name":"Libellé","complete":false,"children":[]},{"name":"Frais de livraison France","complete":false,"children":[]},{"name":"Prix TTC","complete":false,"children":[]},{"name":"4,90 €","complete":false,"children":[]}]},{"name":"A/R les jours ouvrés => 470 € d'essence (sur 22 jours, 160 km, 7l/100, 1.90€/l) ","complete":false,"children":[]},{"name":"Economie Vs Appart = 160 € + TH, Assu, fibre...","complete":false,"children":[]},{"name":"Accès Pau","complete":false,"children":[]},{"name":"80 à 85 km (D944 ou D834)","complete":false,"children":[]}]},{"name":"Appart","complete":false,"children":[{"name":"2 A/R semaine + studio à 450 € => 630 € en gros (160km; 230 € essence 7l/100, 1.90€/l)","complete":false,"children":[]},{"name":"Budget","complete":false,"children":[{"name":"Loyer 490","complete":false,"children":[]},{"name":"Essence","complete":false,"children":[]},{"name":"TH","complete":false,"children":[]},{"name":"Fibre 25 puis 30","complete":false,"children":[]},{"name":"Assu 8","complete":false,"children":[]},{"name":"Elec","complete":false,"children":[]},{"name":"Eau","complete":false,"children":[]}]},{"name":"Parking appart oui","complete":false,"children":[]},{"name":"Fibre appart oui","complete":false,"children":[]},{"name":"Distance taff : 2 km, 6 mn en voiture ou vélo","complete":false,"children":[]}]}]},{"name":"Rialto","complete":false,"children":[{"name":"Conserver l'architecture à l'identique","complete":false,"children":[]},{"name":"Vider \"à Classer\"","complete":false,"children":[]},{"name":"Pièces en temps réel","complete":false,"children":[]},{"name":"Ajouter/cocher SIE, PCE, PRS","complete":false,"children":[]}]},{"name":"3924","complete":false,"children":[{"name":"Acronymes une seule fois","complete":false,"children":[]},{"name":"Vérifier dates et AR","complete":false,"children":[]}]},{"name":"Rendu","complete":false,"children":[{"name":"Vérifier dates PDR dans Alpage","complete":false,"children":[]},{"name":"Ajouter NIC sur 3950","complete":false,"children":[]},{"name":"Préciser que le FEC est détruit (DD, Alto) => modèle","complete":false,"children":[]},{"name":"Méthode Alpage à joindre","complete":false,"children":[]}]},{"name":"BDV","complete":false,"children":[{"name":"Tentative suivi ","complete":false,"children":[{"name":"P2025","complete":false,"children":[{"name":"🏢 Enosis 🟩","complete":false,"children":[{"name":"1er rdv \u003ctime startYear=\"2025\" startMonth=\"9\" startDay=\"4\">Thu, Sep 4, 2025\u003c/time> fait, retours nuls, ","complete":true,"children":[]},{"name":"2e RDV \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"24\">Fri, Oct 24, 2025\u003c/time> 🟨","complete":true,"children":[]},{"name":"Attente retour mail factures/intérêt","complete":true,"children":[]},{"name":"3953 à préparer","complete":false,"children":[]}]},{"name":"🍕 Fausto 🟩","complete":false,"children":[{"name":"Exploitation données - cadrage TVA, chiffrage puis synthèse \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"27\">Mon, Oct 27, 2025\u003c/time> ","complete":true,"children":[]},{"name":"3924 envoyée, suite \u003ctime startYear=\"2025\" startMonth=\"12\" startDay=\"6\">Sat, Dec 6, 2025\u003c/time> ","complete":true,"children":[]},{"name":"Mail d'accord tacite: 751 de confirmation","complete":false,"children":[]}]},{"name":"🍣 Pau-55 🟩","complete":false,"children":[{"name":"RH \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"13\">Mon, Oct 13, 2025\u003c/time> , bien passé, on change rien","complete":true,"children":[]},{"name":"Interloc demandée","complete":true,"children":[]},{"name":"Prépa interloc\u003ctime startYear=\"2025\" startMonth=\"12\" startDay=\"8\">Mon, Dec 8, 2025\u003c/time> ","complete":false,"children":[]},{"name":"Rapport à suivre après AR interloc","complete":false,"children":[]}]},{"name":"👅 Camalot 🟩","complete":false,"children":[{"name":"Ctx semaine du \u003ctime startYear=\"2025\" startMonth=\"8\" startDay=\"11\">Mon, Aug 11, 2025\u003c/time> ","complete":false,"children":[]}]}]},{"name":"🛣️ Cartoroute 🟥","complete":false,"children":[{"name":"Synthèse \u003ctime startYear=\"2026\" startMonth=\"3\" startDay=\"30\">Mon, Mar 30, 2026\u003c/time> ","complete":false,"children":[]},{"name":"Attente CIR RAULT avenants et cie de Bruno","complete":true,"children":[]},{"name":"Etudes charges produits","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"5\">Thu, Feb 5, 2026\u003c/time> 2- FEC à travailler","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"22\">Thu, Jan 22, 2026\u003c/time> 1- à suivre dossier CIR, infos logiciel","complete":true,"children":[]},{"name":"Lancement","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909_SAS CARTOROUTE.pdf","complete":false,"children":[]}]}]},{"name":"🚐Lagrenet 🟥","complete":false,"children":[{"name":"MED, distribution à suivre ","complete":false,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909 ADAM Lagrenet Demsey VG 01 2026.pdf","complete":false,"children":[]}]}]},{"name":"🏢 CMF 🟪","complete":false,"children":[{"name":"ODC \u003ctime startYear=\"2026\" startMonth=\"5\" startDay=\"8\">Fri, May 8, 2026\u003c/time> ","complete":false,"children":[]},{"name":"3924 \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"7\">Tue, Apr 7, 2026\u003c/time> ","complete":true,"children":[]},{"name":"Doc W TVA, à étudier","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"5\">Thu, Feb 5, 2026\u003c/time>2- FEC à travailler","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"23\">Fri, Jan 23, 2026\u003c/time> 1- Déclas TVA à suivre","complete":true,"children":[]},{"name":"Lancement","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909 SCI CMF.pdf","complete":false,"children":[]}]}]},{"name":"🌹ROSE 🟪","complete":false,"children":[{"name":"1er rdv","complete":false,"children":[]}]},{"name":"​🏃​All Runners 🟪","complete":false,"children":[{"name":"1e \u003ctime startYear=\"2026\" startMonth=\"3\" startDay=\"30\">Mon, Mar 30, 2026\u003c/time> ","complete":false,"children":[]},{"name":"AR 3924","complete":false,"children":[]},{"name":"3924","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"ZONE POLARIS, 2 RUE ALESSANDRO VOLTA, 64000 PAU","complete":false,"children":[]},{"name":"3909 ALL RUNERS.pdf","complete":false,"children":[]}]}]},{"name":"🪮 JN-Groupe 🟪","complete":false,"children":[{"name":"30 J de 3926 \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"28\">Tue, Apr 28, 2026\u003c/time> ","complete":false,"children":[]},{"name":"3926 \u003ctime startYear=\"2026\" startMonth=\"3\" startDay=\"27\">Fri, Mar 27, 2026\u003c/time> ","complete":false,"children":[]},{"name":"Visio Bayonne ","complete":true,"children":[]},{"name":"3926 attente Bayonne puis reprendre ou envoi","complete":true,"children":[]},{"name":"Retours ODC \u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"20\">Fri, Feb 20, 2026\u003c/time> prorog","complete":true,"children":[]},{"name":"(Relevés à éplucher pour cohérences annulations puis synthèse: travail Idea 😁, droit de com revenu en xls)","complete":true,"children":[]},{"name":"Cahier n°2 retour pour \u003ctime startYear=\"2025\" startMonth=\"11\" startDay=\"19\">Wed, Nov 19, 2025\u003c/time> ","complete":true,"children":[]},{"name":"3924 à préparer car prescription","complete":true,"children":[]}]},{"name":"🚬 Feraud 🟪","complete":false,"children":[{"name":"ODC ? \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"16\">Thu, Apr 16, 2026\u003c/time> ","complete":false,"children":[]},{"name":"3924","complete":true,"children":[]},{"name":"Synthèse \u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"17\">Tue, Feb 17, 2026\u003c/time> ","complete":true,"children":[]},{"name":"Etudier 23 et 24","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"23\">Fri, Jan 23, 2026\u003c/time> Visa 3926 2022","complete":true,"children":[]},{"name":"\u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"16\">Fri, Jan 16, 2026\u003c/time> ODC 2022","complete":true,"children":[]},{"name":"Retours ODC 2022 \u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"20\">Tue, Jan 20, 2026\u003c/time> ","complete":true,"children":[]},{"name":"3924 à préparer pour synthèse","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909 FERAUD.pdf","complete":false,"children":[]}]}]},{"name":"🚬 UDF-Sud-Ouest 🟪","complete":false,"children":[{"name":"ODC ?","complete":false,"children":[]},{"name":"3924 \u003ctime startYear=\"2026\" startMonth=\"3\" startDay=\"26\">Thu, Mar 26, 2026\u003c/time> ","complete":true,"children":[]},{"name":"Expertiser datas pour voir si rejet de compta possible","complete":true,"children":[]},{"name":"Synthèse \u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"17\">Tue, Feb 17, 2026\u003c/time> ","complete":true,"children":[]},{"name":"Trame 3924 débutée","complete":true,"children":[]},{"name":"1ere \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"13\">Mon, Oct 13, 2025\u003c/time> délocalisation, bien passé","complete":true,"children":[]},{"name":"2e \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"29\">Wed, Oct 29, 2025\u003c/time> avec mail à recevoir avec PDF Comptes notamment","complete":true,"children":[]},{"name":"Visite à suivre \u003ctime startYear=\"2025\" startMonth=\"11\" startDay=\"17\">Mon, Nov 17, 2025\u003c/time> ","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909 UDF SUD OUEST.pdf","complete":false,"children":[]}]}]},{"name":"🍯Miellerie Damine 🟪","complete":false,"children":[{"name":"2e \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"8\">Wed, Apr 8, 2026\u003c/time> ","complete":false,"children":[]},{"name":"1ere \u003ctime startYear=\"2026\" startMonth=\"2\" startDay=\"24\">Tue, Feb 24, 2026\u003c/time> ","complete":true,"children":[]},{"name":"3909","complete":false,"children":[{"name":"3909 MIELLERIE DAMINE visée.pdf","complete":false,"children":[]}]}]},{"name":"🏨 El-Va 🟪","complete":false,"children":[{"name":"Interloc réu \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"9\">Thu, Apr 9, 2026\u003c/time> , inter \u003ctime startYear=\"2026\" startMonth=\"4\" startDay=\"13\">Mon, Apr 13, 2026\u003c/time> (=> CDID?)","complete":false,"children":[]},{"name":"CR RH en cours","complete":true,"children":[]},{"name":"RH : encore un mail semaine 5 avant CR Peio","complete":true,"children":[]},{"name":"2 3926 EL-VA / 2120 PERE au visa CF, à reprendre ","complete":true,"children":[]}]},{"name":"❄️ Jeanneton 🟩","complete":false,"children":[{"name":"Rapport \u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"21\">Wed, Jan 21, 2026\u003c/time> ","complete":false,"children":[]},{"name":"Retours ODC \u003ctime startYear=\"2026\" startMonth=\"1\" startDay=\"7\">Wed, Jan 7, 2026\u003c/time> ","complete":true,"children":[]},{"name":" Exploitations données ","complete":true,"children":[]},{"name":"synthèse \u003ctime startYear=\"2025\" startMonth=\"10\" startDay=\"21\">Tue, Oct 21, 2025\u003c/time> ","complete":true,"children":[]},{"name":" 3924 débutée, à avancer, travail Idea 😁","complete":true,"children":[]},{"name":"3924 à finir","complete":true,"children":[]}]}]},{"name":"Lancement","complete":false,"children":[{"name":"3927 : références, fax / grade Zaldua, administratrice de l'Etat ","complete":false,"children":[]},{"name":"MED : envoi suite AR 3927","complete":false,"children":[]}]}]}]}]}}</script>
+<script>
+let DATA = JSON.parse(document.getElementById('data').textContent);
+document.getElementById('maj').textContent = new Date(DATA.updated).toLocaleString('fr-FR');
+
+const C = { node: null, parentId: null, idx: null };
+const treeEl = document.getElementById('tree');
+const zoomBanner = document.getElementById('zoomBanner');
+
+function uid(n) { return n._id || (n._id = 'n' + Math.random().toString(36).slice(2, 9)); }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// Render WF-style: text is raw HTML if it looks like it (time tags, marks), else escaped
+function renderName(n) {
+  const t = n.name || '';
+  if (/<[a-z]/i.test(t)) return t; // contains HTML (time, mark, b, hr) — trust WF export
+  return esc(t);
+}
+
+function render(node, parentEl) {
+  node.children.forEach((child, i) => renderNode(child, parentEl, node, i));
+}
+
+function renderNode(n, parentEl, parent, idx) {
+  n._parent = parent; n._idx = idx;
+  const row = document.createElement('div');
+  row.className = 'row' + (n.complete ? ' done' : '');
+  row.dataset.id = uid(n);
+  const bullet = document.createElement('span');
+  bullet.className = 'bullet';
+  bullet.textContent = n.children.length ? (n._open === false ? '▸' : '▾') : '•';
+  const content = document.createElement('div');
+  content.className = 'content';
+  content.contentEditable = 'true';
+  content.innerHTML = renderName(n);
+  row.appendChild(bullet); row.appendChild(content);
+  parentEl.appendChild(row);
+
+  const kids = document.createElement('div');
+  kids.className = 'children' + (n._open === false ? ' childrenHidden' : '');
+  render(n, kids);
+  parentEl.appendChild(kids);
+
+  bullet.onclick = () => { if (!n.children.length) return; n._open = (n._open === false); kids.classList.toggle('childrenHidden'); bullet.textContent = n._open === false ? '▸' : '▾'; };
+  content.addEventListener('input', () => { n.name = content.textContent; });
+
+  // Key handling
+  content.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const newText = content.textContent;
+      content.textContent = newText; n.name = newText;
+      const nn = { name: '', complete: false, children: [] };
+      if (document.getCaretRect) {}
+      parent.children.splice(idx + 1, 0, nn);
+      rerender();
+      setTimeout(() => focusNode(nn, 0), 30);
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      if (e.shiftKey) {
+        // outdent: move under grandparent after parent
+        const g = outdentTarget(parent);
+        if (!g) return;
+        const [me] = parent.children.splice(idx, 1);
+        g.children.splice(parent._idx + 1, 0, me);
+        rerender(); setTimeout(() => focusNode(me, me.name.length), 30);
+      } else {
+        if (idx === 0) return;
+        const [me] = parent.children.splice(idx, 1);
+        const prev = parent.children[idx - 1];
+        prev._open = true;
+        prev.children.push(me);
+        rerender(); setTimeout(() => focusNode(me, me.name.length), 30);
+      }
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      if (content.textContent.length && (e.key==='ArrowUp'? selAtStart(content): selAtEnd(content)) === false) return;
+      e.preventDefault();
+      navigate(parent, idx, e.key === 'ArrowUp' ? -1 : 1);
+    } else if (e.key === 'Backspace' && content.textContent === '' && document.getSelection().anchorOffset === 0) {
+      e.preventDefault();
+      if (parent.children.length <= 1) return;
+      parent.children.splice(idx, 1);
+      rerender(); setTimeout(() => { const prev = siblingBefore(parent, idx); if (prev) focusNode(prev, prev.name.length); }, 30);
+    }
+  });
+}
+
+function outdentTarget(parent) { return parent._parent || null; }
+function selAtStart(el) { const s = document.getSelection(); const r = s.getRangeAt(0); const r2 = r.cloneRange(); r2.selectNodeContents(el); r2.setEnd(r.startContainer, r.startOffset); return r2.toString().length === 0; }
+function selAtEnd(el) { const s = document.getSelection(); const r = s.getRangeAt(0); const r2 = r.cloneRange(); r2.selectNodeContents(el); r2.setStart(r.endContainer, r.endOffset); return r2.toString().length === 0; }
+
+function allNodes(n, out = [], parent = null) {
+  n._parent = parent;
+  n.children.forEach((c, i) => { c._idx = i; allNodes(c, out, n); });
+  if (parent === null && out.length === 0) out.push(n);
+  return out;
+}
+function navigate(parent, idx, dir) {
+  const flat = [];
+  collect(root, flat);
+  const cur = parent.children[idx];
+  const i = flat.indexOf(cur);
+  const t = flat[i + dir];
+  if (t) focusNode(t, dir > 0 ? 0 : t.name.length);
+}
+function collect(n, out) { out.push(n); n.children.forEach(c => { if (c._open !== false) collect(c, out); }); }
+function siblingBefore(parent, idx) { return parent.children[idx - 1]; }
+function focusNode(n, pos) {
+  const el = treeEl.querySelector('.row[data-id="' + uid(n) + '"] .content');
+  if (!el) return;
+  el.focus();
+  const r = document.createRange(); r.selectNodeContents(el);
+  try { r.collapse(false); const s = document.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
+}
+
+// Export: rebuild OPML from tree, escaping to double-encoded WF format
+function exportOPML() {
+  function encInner(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function enc(s) { return encInner(encInner(s)); }
+  let out = '<?xml version="1.0"?>\n<opml version="2.0">\n <head><ownerEmail>pierreduffourc@gmail.com</ownerEmail></head>\n <body>\n';
+  function walk(n, depth) {
+    const pad = ' '.repeat(depth + 1);
+    const complete = n.complete ? ' _complete="true"' : '';
+    out += pad + '<outline text="' + enc(n.name) + '"' + complete + (n.children.length ? '' : ' /') + '>' + '\n';
+    n.children.forEach(c => walk(c, depth + 1));
+    if (n.children.length) out += pad + '</outline>' + '\n';
+  }
+  walk(DATA.root, 1);
+  out += ' </body>\n</opml>';
+  const blob = new Blob([out], { type: 'text/x-opml' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'pro-export.opml';
+  a.click();
+}
+
+document.getElementById('save').onclick = exportOPML;
+document.getElementById('expandAll').onclick = () => { (function f(n) { n._open = true; n._id=null; n.children.forEach(f); })(DATA.root); rerender(); };
+document.getElementById('collapseAll').onclick = () => { (function f(n) { n._open = false; n._id=null; n.children.forEach(f); })(DATA.root); rerender(); };
+
+function rerender() {
+  treeEl.innerHTML = '';
+  (function clearIds(n){ delete n._id; delete n._parent; delete n._idx; n.children.forEach(clearIds); })(DATA.root);
+  render(DATA.root, treeEl);
+}
+
+// click bullet toggles handled; dblclick text to toggle complete like WF? keep simple: ctrl+enter toggle
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'Enter') {
+    const sel = document.getSelection();
+    const row = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement).closest('.row');
+    if (row) { const n = findNode(row.dataset.id); n.complete = !n.complete; row.classList.toggle('done'); }
+  }
+  if (e.ctrlKey && e.key === 's') { e.preventDefault(); exportOPML(); }
+});
+let root = DATA.root;
+function findNode(id) { let found = null; (function f(n){ if (n._id === id) { found = n; return; } n.children.forEach(f); })(DATA.root); return found; }
+
+rerender();
+</script>
+</body>
+</html>
