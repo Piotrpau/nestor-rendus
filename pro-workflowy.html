@@ -207,13 +207,22 @@ const GH = { owner:'Piotrpau', repo:'nestor-rendus', path:'wf-pro-data.json' };
 const GHTOKEN = atob('Z2l0aHViX3BhdF8xMUJPSkRHNUEwMWM4VnE2ajlJVVpHX1BxTE9ucERIc0JsazdQbVEzZkRkYVVUTmQ2b2tnNDJ6TUZJUDlweDdGUDhMRVpRTlVYUHdlVWE1T3pa');
 async function sendMail(){
   const btn = document.getElementById('saveGh');
-  btn.textContent = '✉️ Ouverture du mail…';
+  btn.textContent = '⏳ Copie…';
   try {
     const payload = JSON.stringify(DATA, (k,v) => k.startsWith('_') ? undefined : v);
     const subject = encodeURIComponent('[WF Pro] Modifs ' + new Date().toLocaleString('fr-FR'));
-    const body = encodeURIComponent(payload);
-    window.open('https://mail.google.com/mail/u/0/?view=cm&fs=1&to=pierreduffourc@gmail.com&su=' + subject + '&body=' + body, '_blank');
-    toast('✉️ Gmail ouvert : vérifie et envoie le mail !', 6000);
+    try {
+      await navigator.clipboard.writeText(payload);
+      toast('📋 Copié ! Le mail s'+String.fromCharCode(39)+'ouvre : colle (Ctrl+V) le contenu et envoie.', 10000);
+    } catch(e) {
+      // pas de clipboard : mailto direct avec body court impossible -> fallback telechargement JSON
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([payload], {type:'application/json'}));
+      a.download = 'wf-pro-modifs.json';
+      a.click();
+      toast('💾 Fichier wf-pro-modifs.json téléchargé : joins-le au mail.', 10000);
+    }
+    location.href = 'mailto:pierreduffourc@gmail.com?subject=' + subject;
   } catch(err) {
     toast('❌ Erreur : ' + err.message, 8000);
   }
