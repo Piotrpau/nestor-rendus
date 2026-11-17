@@ -175,9 +175,11 @@ function renderNode(n, parentEl, parent, idx){
       n.c = !n.c; row.classList.toggle('done'); save();
     } else if (e.shiftKey && e.ctrlKey && e.key === 'Backspace') {
       e.preventDefault();
-      content.textContent = '';
-      n.n = '';
-      save();
+      if (parent.k.length <= 1) return;
+      const prev2 = parent.k[idx-1] || null;
+      parent.k.splice(idx, 1);
+      save(); rerender();
+      if (prev2) setTimeout(() => focus(prev2, prev2.n.length), 30);
     } else if (e.ctrlKey && e.key === 'Backspace') {
       e.preventDefault();
       const txt2 = content.innerText || '';
