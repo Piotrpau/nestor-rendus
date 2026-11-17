@@ -175,14 +175,40 @@ function renderNode(n, parentEl, parent, idx){
       n.c = !n.c; row.classList.toggle('done'); save();
     } else if (e.ctrlKey && e.key === 'Backspace') {
       e.preventDefault();
+      const txt2 = content.innerText || '';
       const sel = document.getSelection();
-      const dir = e.shiftKey ? 'forward' : 'backward';
-      try { sel.modify('extend', dir, 'word'); } catch (err) {}
-      if (!sel.isCollapsed) {
-        sel.deleteFromDocument();
-        n.n = toRaw(content.innerText);
-        save();
+      if (!sel.rangeCount) return;
+      const r0 = document.createRange(); r0.selectNodeContents(content);
+      r0.setEnd(sel.getRangeAt(0).startContainer, sel.getRangeAt(0).startOffset);
+      const off = r0.toString().length;
+      let a, b;
+      if (e.shiftKey) {
+        a = off; b = off;
+        while (b < txt2.length && /\s/.test(txt2[b])) b++;
+        while (b < txt2.length && !/\s/.test(txt2[b])) b++;
+      } else {
+        a = off;
+        while (a > 0 && /\s/.test(txt2[a-1])) a--;
+        while (a > 0 && !/\s/.test(txt2[a-1])) a--;
+        b = off;
       }
+      if (a === b) return;
+      function put(rw, idx, atStart){
+        const w = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
+        let acc = 0, tn;
+        while ((tn = w.nextNode())) {
+          const L = tn.data.length;
+          if (acc + L >= idx) { if (atStart) rw.setStart(tn, idx - acc); else rw.setEnd(tn, idx - acc); return; }
+          acc += L;
+        }
+        if (atStart) rw.selectNodeContents(content); 
+      }
+      const rw = document.createRange(); rw.setStart(content, 0);
+      put(rw, a, true); put(rw, b, false);
+      sel.removeAllRanges(); sel.addRange(rw);
+      document.execCommand('delete');
+      n.n = toRaw(content.innerText);
+      save();
     } else if (e.key === 'Backspace' && txt === '') {
       e.preventDefault();
       if (parent.k.length <= 1) return;
