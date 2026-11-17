@@ -173,6 +173,16 @@ function renderNode(n, parentEl, parent, idx){
     } else if (e.ctrlKey && e.key === 'Enter') {
       e.preventDefault();
       n.c = !n.c; row.classList.toggle('done'); save();
+    } else if (e.ctrlKey && e.key === 'Backspace') {
+      e.preventDefault();
+      const sel = document.getSelection();
+      const dir = e.shiftKey ? 'forward' : 'backward';
+      try { sel.modify('extend', dir, 'word'); } catch (err) {}
+      if (!sel.isCollapsed) {
+        sel.deleteFromDocument();
+        n.n = toRaw(content.innerText);
+        save();
+      }
     } else if (e.key === 'Backspace' && txt === '') {
       e.preventDefault();
       if (parent.k.length <= 1) return;
