@@ -257,9 +257,10 @@ async function sendMail(){
   try{ await navigator.clipboard.writeText(payload); copied=true; }catch(e){
     try{ const ta=document.createElement('textarea'); ta.value=payload; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); copied=true; }catch(e2){}
   }
+  const hint = encodeURIComponent("NESOR : colle ici le JSON des modifs (Ctrl+V) dans le corps du mail puis envoie.");
   if(copied){ toast('📋 Copié ! Le mail va s’ouvrir — colle (Ctrl+V) et envoie.', 12000); }
   else { toast('⚠️ Copie impossible — utilise ⬜ Export OPML et joins le fichier.', 12000); }
-  setTimeout(()=>{ location.href='mailto:pierreduffourc@gmail.com?subject='+su; }, 600);
+  setTimeout(()=>{ location.href='mailto:pierreduffourc@gmail.com?subject='+su+'&body='+hint; }, 600);
   btn.disabled=false; btn.textContent='✉️ Mail à Nestor';
 }
 document.getElementById('saveGh').onclick = sendMail;
