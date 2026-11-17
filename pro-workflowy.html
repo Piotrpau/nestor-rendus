@@ -173,6 +173,11 @@ function renderNode(n, parentEl, parent, idx){
     } else if (e.ctrlKey && e.key === 'Enter') {
       e.preventDefault();
       n.c = !n.c; row.classList.toggle('done'); save();
+    } else if (e.shiftKey && e.ctrlKey && e.key === 'Backspace') {
+      e.preventDefault();
+      content.textContent = '';
+      n.n = '';
+      save();
     } else if (e.ctrlKey && e.key === 'Backspace') {
       e.preventDefault();
       const txt2 = content.innerText || '';
