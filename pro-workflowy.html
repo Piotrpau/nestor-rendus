@@ -135,6 +135,7 @@ function renderNode(n, parentEl, parent, idx){
   bullet.onclick = () => { if(!n.k || !n.k.length) return; n._open = (n._open === false); kids.classList.toggle('hide'); bullet.textContent = n._open === false ? '▸' : '▾'; };
 
   content.addEventListener('focus', () => {
+    snapshot();
     content.setAttribute('aria-frozen', '0');
     content.textContent = editable(n);
   });
@@ -149,12 +150,14 @@ function renderNode(n, parentEl, parent, idx){
     if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
       e.preventDefault();
       n.n = toRaw(txt);
+      snapshot();
       const nn = { n:'', c:false, k:[] };
       (parent.k = parent.k || []).splice(idx+1, 0, nn);
       save(); rerender();
       setTimeout(() => focus(nn, 0), 30);
     } else if (e.key === 'Tab') {
       e.preventDefault();
+      snapshot();
       if (e.shiftKey) {
         const gp = n._parent && n._parent._parent;
         if (!gp) return;
@@ -172,10 +175,12 @@ function renderNode(n, parentEl, parent, idx){
       }
     } else if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'Enter' || e.key === '\n')) {
       e.preventDefault();
+      snapshot();
       n.c = !n.c; row.classList.toggle('done'); save();
     } else if (e.shiftKey && e.ctrlKey && e.key === 'Backspace') {
       e.preventDefault();
       if (parent.k.length <= 1) return;
+      snapshot();
       const prev2 = parent.k[idx-1] || null;
       parent.k.splice(idx, 1);
       save(); rerender();
@@ -228,16 +233,39 @@ function renderNode(n, parentEl, parent, idx){
 }
 
 
+const HIST = [];
+function snapshot(){
+  try {
+    const st = JSON.stringify(DATA, (k,v)=>k.startsWith('_')?undefined:v);
+    if (!HIST.length || HIST[HIST.length-1] !== st) { HIST.push(st); if (HIST.length > 60) HIST.shift(); }
+  } catch(e){}
+}
 // Secours global : Ctrl+Entrée / Ctrl+Maj+Retour même si le listener de row est perdu
 document.addEventListener('keydown', (e) => {
   if (e.defaultPrevented) return;
   const t = e.target;
+  const isUndo = e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'z' || e.key === 'Z' || e.key === 'u');
+  if (isUndo && HIST.length) {
+    e.preventDefault();
+    let cur = null;
+    try { cur = JSON.stringify(DATA, (k,v)=>k.startsWith('_')?undefined:v); } catch(err){}
+    while (HIST.length && HIST[HIST.length-1] === cur) HIST.pop();
+    if (!HIST.length) { toast('Rien à annuler'); return; }
+    const last = HIST.pop();
+    try {
+      const d = JSON.parse(last);
+      Object.keys(DATA).forEach(k => { if (!(k in d)) delete DATA[k]; });
+      Object.assign(DATA, d);
+      save(); rerender(); toast('↩️ Annulé');
+    } catch(err) { toast('⚠️ Annulation impossible'); }
+    return;
+  }
   if (!t || !t.classList || !t.classList.contains('content')) return;
   const row = t.closest('.row'); if (!row) return;
   const isCtrlEnter = e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'Enter' || e.key === '\n');
   const isDel = e.ctrlKey && e.shiftKey && (e.key === 'Backspace' || e.code === 'Backspace');
-  if (isCtrlEnter) { e.preventDefault(); row.classList.toggle('done'); toast(row.classList.contains('done') ? '✅ Coché' : '⬜ Décoché'); }
-  else if (isDel) { e.preventDefault(); const kids = row.nextElementSibling; const all=[row]; if(kids&&kids.classList.contains('children')) kids.querySelectorAll('.row').forEach(r=>all.push(r)); let prev=row.previousElementSibling; while(prev && !prev.classList.contains('row')) prev=prev.previousElementSibling; all.forEach(r=>r.remove()); if(kids) kids.remove(); if(prev) prev.querySelector('.content').focus(); toast('🗑️ Supprimé (avec ses sous-points)'); }
+  if (isCtrlEnter) { e.preventDefault(); snapshot(); row.classList.toggle('done'); toast(row.classList.contains('done') ? '✅ Coché' : '⬜ Décoché'); }
+  else if (isDel) { e.preventDefault(); snapshot(); const kids = row.nextElementSibling; const all=[row]; if(kids&&kids.classList.contains('children')) kids.querySelectorAll('.row').forEach(r=>all.push(r)); let prev=row.previousElementSibling; while(prev && !prev.classList.contains('row')) prev=prev.previousElementSibling; all.forEach(r=>r.remove()); if(kids) kids.remove(); if(prev) prev.querySelector('.content').focus(); toast('🗑️ Supprimé (avec ses sous-points)'); }
 });
 function rerender(){
   treeEl.innerHTML = '';
