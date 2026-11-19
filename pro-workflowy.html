@@ -170,7 +170,7 @@ function renderNode(n, parentEl, parent, idx){
         save(); rerender();
         setTimeout(() => focus(me, me.n.length), 30);
       }
-    } else if (e.ctrlKey && e.key === 'Enter') {
+    } else if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'Enter' || e.key === '\n')) {
       e.preventDefault();
       n.c = !n.c; row.classList.toggle('done'); save();
     } else if (e.shiftKey && e.ctrlKey && e.key === 'Backspace') {
@@ -227,6 +227,18 @@ function renderNode(n, parentEl, parent, idx){
   });
 }
 
+
+// Secours global : Ctrl+Entrée / Ctrl+Maj+Retour même si le listener de row est perdu
+document.addEventListener('keydown', (e) => {
+  if (e.defaultPrevented) return;
+  const t = e.target;
+  if (!t || !t.classList || !t.classList.contains('content')) return;
+  const row = t.closest('.row'); if (!row) return;
+  const isCtrlEnter = e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'Enter' || e.key === '\n');
+  const isDel = e.ctrlKey && e.shiftKey && (e.key === 'Backspace' || e.code === 'Backspace');
+  if (isCtrlEnter) { e.preventDefault(); row.classList.toggle('done'); toast(row.classList.contains('done') ? '✅ Coché' : '⬜ Décoché'); }
+  else if (isDel) { e.preventDefault(); const kids = row.nextElementSibling; const all=[row]; if(kids&&kids.classList.contains('children')) kids.querySelectorAll('.row').forEach(r=>all.push(r)); let prev=row.previousElementSibling; while(prev && !prev.classList.contains('row')) prev=prev.previousElementSibling; all.forEach(r=>r.remove()); if(kids) kids.remove(); if(prev) prev.querySelector('.content').focus(); toast('🗑️ Supprimé (avec ses sous-points)'); }
+});
 function rerender(){
   treeEl.innerHTML = '';
   (function clear(n){ delete n._i; delete n._parent; delete n._pidx; (n.k||[]).forEach(clear); })(DATA.root);
