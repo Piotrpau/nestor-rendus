@@ -260,6 +260,15 @@ document.addEventListener('keydown', (e) => {
     } catch(err) { toast('⚠️ Annulation impossible'); }
     return;
   }
+  const isUp = !e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'ArrowUp');
+  const isDown = !e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'ArrowDown');
+  if (isUp || isDown) {
+    const all = Array.from(document.querySelectorAll('.row .content'));
+    const i = all.indexOf(t);
+    const tgt = all[i + (isDown ? 1 : -1)];
+    if (tgt) { e.preventDefault(); tgt.focus(); }
+    return;
+  }
   if (!t || !t.classList || !t.classList.contains('content')) return;
   const row = t.closest('.row'); if (!row) return;
   const isCtrlEnter = e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'Enter' || e.key === '\n');
