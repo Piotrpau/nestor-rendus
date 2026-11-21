@@ -290,7 +290,7 @@ function focus(n, pos){
 function save(){
   DATA.updated = new Date().toISOString();
   DATA.local = true;
-  try { localStorage.setItem(STORE, JSON.stringify(DATA)); } catch(e){}
+  try { localStorage.setItem(STORE, JSON.stringify(DATA, (k,v)=>k.startsWith('_')?undefined:v)); } catch(e){}
 }
 
 // ---- GitHub save (option A) ----
