@@ -135,7 +135,6 @@ function renderNode(n, parentEl, parent, idx){
   bullet.onclick = () => { if(!n.k || !n.k.length) return; n._open = (n._open === false); kids.classList.toggle('hide'); bullet.textContent = n._open === false ? '▸' : '▾'; };
 
   content.addEventListener('focus', () => {
-    snapshot();
     content.setAttribute('aria-frozen', '0');
     content.textContent = editable(n);
   });
